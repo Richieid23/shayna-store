@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DetailController;
@@ -23,5 +24,7 @@ Route::get('/categories', [CategoryController::class, 'index'])->name('categorie
 Route::get('/details/{id}', [DetailController::class, 'index'])->name('details');
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('/success', [CartController::class, 'success'])->name('success');
+
+Route::get('/register/success', [RegisterController::class, 'success'])->name('register-success');
 
 Auth::routes();
