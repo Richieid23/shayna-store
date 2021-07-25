@@ -38,23 +38,34 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Email Product</label>
-                                                <input type="email" name="email" class="form-control" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Password Product</label>
-                                                <input type="password" name="password" class="form-control" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Roles</label>
-                                                <select name="roles" class="form-control" required>
-                                                    <option value="ADMIN">Admin</option>
-                                                    <option value="PRODUCT">Product</option>
+                                                <label>Pemilik Product</label>
+                                                <select name="users_id" class="form-control">
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    @endforeach
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Kategori Product</label>
+                                                <select name="categories_id" class="form-control">
+                                                    @foreach ($categories as $category)
+                                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                         <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Harga Product</label>
+                                                <input type="number" name="price" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Deskripsi Product</label>
+                                                <textarea name="description" id="editor"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -74,3 +85,10 @@
         </div>
     </div>
 @endsection
+
+@push('addon-script')
+    <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace( 'editor' );
+    </script>
+@endpush
