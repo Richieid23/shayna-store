@@ -60,114 +60,33 @@
             </div>
           </div>
           <div class="row">
-            <div
-              class="col-6 col-md-3 col-lg-2"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a class="component-categories d-block" href="#">
-                <div class="categories-image">
-                  <img
-                    src="/images/categories-gadgets.svg"
-                    alt="Gadgets Categories"
-                    class="w-100"
-                  />
+              @php
+                  $incrementCategory = 0
+              @endphp
+            @forelse ($categories as $category)
+                <div
+                    class="col-6 col-md-3 col-lg-2"
+                    data-aos="fade-up"
+                    data-aos-delay="{{ $incrementCategory += 100 }}"
+                >
+                    <a class="component-categories d-block" href="{{ route('categories-detail', $category->slug) }}">
+                        <div class="categories-image">
+                        <img
+                            src="{{ Storage::url($category->photo) }}"
+                            alt=""
+                            class="w-100"
+                        />
+                        </div>
+                        <p class="categories-text">
+                        {{ $category->name }}
+                        </p>
+                    </a>
                 </div>
-                <p class="categories-text">
-                  Gadgets
-                </p>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-3 col-lg-2"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <a class="component-categories d-block" href="#">
-                <div class="categories-image">
-                  <img
-                    src="/images/categories-furniture.svg"
-                    alt="Furniture Categories"
-                    class="w-100"
-                  />
+            @empty
+                <div class="col-12 text-center py-5" data-aos="fade-up" data-aos-delay="100">
+                    No Categories Found
                 </div>
-                <p class="categories-text">
-                  Furniture
-                </p>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-3 col-lg-2"
-              data-aos="fade-up"
-              data-aos-delay="300"
-            >
-              <a class="component-categories d-block" href="#">
-                <div class="categories-image">
-                  <img
-                    src="/images/categories-makeup.svg"
-                    alt="Makeup Categories"
-                    class="w-100"
-                  />
-                </div>
-                <p class="categories-text">
-                  Makeup
-                </p>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-3 col-lg-2"
-              data-aos="fade-up"
-              data-aos-delay="400"
-            >
-              <a class="component-categories d-block" href="#">
-                <div class="categories-image">
-                  <img
-                    src="/images/categories-sneaker.svg"
-                    alt="Sneaker Categories"
-                    class="w-100"
-                  />
-                </div>
-                <p class="categories-text">
-                  Sneaker
-                </p>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-3 col-lg-2"
-              data-aos="fade-up"
-              data-aos-delay="500"
-            >
-              <a class="component-categories d-block" href="#">
-                <div class="categories-image">
-                  <img
-                    src="/images/categories-tools.svg"
-                    alt="Tools Categories"
-                    class="w-100"
-                  />
-                </div>
-                <p class="categories-text">
-                  Tools
-                </p>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-3 col-lg-2"
-              data-aos="fade-up"
-              data-aos-delay="600"
-            >
-              <a class="component-categories d-block" href="#">
-                <div class="categories-image">
-                  <img
-                    src="/images/categories-baby.svg"
-                    alt="Baby Categories"
-                    class="w-100"
-                  />
-                </div>
-                <p class="categories-text">
-                  Baby
-                </p>
-              </a>
-            </div>
+            @endforelse
           </div>
         </div>
       </section>
