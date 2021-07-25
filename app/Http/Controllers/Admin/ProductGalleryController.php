@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductGalleryRequest;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\ProductGallery;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -48,7 +49,7 @@ class ProductGalleryController extends Controller
                     ';
                 })
                 ->editColumn('photos', function ($item) {
-                    return $item->photo ? '<img src="' . Storage::url($item->photo) . '" style="max-height: 88px"/>' : '';
+                    return $item->photos ? '<img src="' . Storage::url($item->photos) . '" style="max-height: 88px"/>' : '';
                 })
                 ->rawColumns(['action', 'photos'])->make();
         }
@@ -63,9 +64,9 @@ class ProductGalleryController extends Controller
      */
     public function create()
     {
-        $users = User::all();
-        $categories = Category::all();
-        return view('pages.admin.product-gallery.create', ['users' => $users, 'categories' => $categories]);
+        $products = Product::all();
+
+        return view('pages.admin.product-gallery.create', ['products' => $products]);
     }
 
     /**
@@ -78,7 +79,7 @@ class ProductGalleryController extends Controller
     {
         $data = $request->all();
 
-        $data['slug'] = Str::slug($request->name);
+        $data['photos'] = $request->file('photos')->store('assets/product', 'public');
 
         ProductGallery::create($data);
 
@@ -104,11 +105,7 @@ class ProductGalleryController extends Controller
      */
     public function edit($id)
     {
-        $item = ProductGallery::findOrFail($id);
-        $users = User::all();
-        $categories = Category::all();
-
-        return view('pages.admin.product-gallery.edit', ['item' => $item, 'users' => $users, 'categories' => $categories]);
+        //
     }
 
     /**
@@ -120,15 +117,7 @@ class ProductGalleryController extends Controller
      */
     public function update(ProductGalleryRequest $request, $id)
     {
-        $data = $request->all();
-
-        $item = ProductGallery::findOrFail($id);
-
-        $data['slug'] = Str::slug($request->name);
-
-        $item->update($data);
-
-        return redirect()->route('product-gallery.index');
+        //
     }
 
     /**
