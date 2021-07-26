@@ -23,8 +23,8 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Email</label>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" v-model="email">
+                            <label>Email Address</label>
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" :class="{ 'is-invalid' : this.email_unavailable }" name="email" value="{{ old('email') }}" required autocomplete="email" v-model="email" @change="checkEmail()">
 
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -108,7 +108,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-success btn-block mt-4">
+                        <button type="submit" class="btn btn-success btn-block mt-4" :disabled="this.email_unavailable">
                             Sign Up Now
                         </button>
                         <a href="{{ route('login') }}" class="btn btn-signup btn-block mt-2">
@@ -125,6 +125,7 @@
 @push('addon-script')
     <script src="/vendor/vue/vue.js"></script>
     <script src="https://unpkg.com/vue-toasted"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
       Vue.use(Toasted);
 
@@ -132,21 +133,51 @@
         el: "#register",
         mounted() {
           AOS.init();
-          this.$toasted.error(
-            "Maaf, tampaknya email sudah terdaftar pada sistem kami.",
-            {
-              position: "top-center",
-              className: "rounded",
-              duration: 1000,
-            }
-          );
         },
-        data: {
-          name: "Angga Hazza Sett",
-          email: "kamujagoan@bwa.id",
-          password: "",
-          is_store_open: true,
-          store_name: "",
+        methods: {
+            checkEmail: function() {
+                var self = this;
+                axios.get('{{ route('api-register-check') }}', {
+                    params: {
+                        email: self.email
+                    }
+                })
+                    .then(function (response) {
+                        if (response.data == 'Available') {
+                            self.$toasted.show(
+                                "Email anda tersedia! Silahkan lanjut langkah selanjutnya",
+                                {
+                                    position: "top-center",
+                                    className: "rounded",
+                                    duration: 2000,
+                                }
+                            );
+                            self.email_unavailable = false;
+                        } else {
+                            self.$toasted.error(
+                                "Maaf, tampaknya email sudah terdaftar pada sistem kami.",
+                                {
+                                    position: "top-center",
+                                    className: "rounded",
+                                    duration: 2000,
+                                }
+                            );
+                            self.email_unavailable = true;
+                        }
+
+                        // handle success
+                        console.log(response);
+                    })
+            }
+        },
+        data() {
+            return {
+                name: "Angga Hazza Sett",
+                email: "kamujagoan@bwa.id",
+                is_store_open: true,
+                store_name: "",
+                email_unavailable: false
+            }
         },
       });
     </script>
