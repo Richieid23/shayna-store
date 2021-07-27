@@ -14,7 +14,8 @@ class Transaction extends Model
         'insurance_price',
         'shipping_price',
         'total_price',
-        'code'
+        'code',
+        'transaction_status'
     ];
 
     protected $hidden = [];
