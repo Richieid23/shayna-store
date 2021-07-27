@@ -19,7 +19,9 @@
               <div class="dashboard-content">
                 <div class="row">
                   <div class="col-12">
-                    <form action="">
+                    <form action="{{ route('dashboard-products-store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="users_id" value="{{ Auth::user()->id }}">
                       <div class="card">
                         <div class="card-body">
                           <div class="row">
@@ -50,11 +52,21 @@
                               </div>
                             </div>
                             <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Kategori Product</label>
+                                    <select name="categories_id" class="form-control">
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
                               <div class="form-group">
-                                <label for="description">Description</label>
+                                <label for="editor">Description</label>
                                 <textarea
-                                  name="editor"
-                                  id=""
+                                  name="description"
+                                  id="editor"
                                   cols="30"
                                   rows="4"
                                   class="form-control"
@@ -72,7 +84,7 @@ The Nike Air Max 720 SE goes bigger than ever before with Nike's tallest Air uni
                                   class="form-control pt-1"
                                   id="thumbnails"
                                   aria-describedby="thumbnails"
-                                  name="thumbnails"
+                                  name="photo"
                                 />
                                 <small class="text-muted">
                                   Kamu dapat memilih lebih dari satu file
