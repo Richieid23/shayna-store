@@ -15,6 +15,7 @@
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
+        "midtrans/midtrans-php": "^2.4",
         "sentry/sentry-laravel": "dev-master",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
